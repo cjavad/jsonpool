@@ -4,7 +4,7 @@
   "description": "A json database for devs",
   "main": "main.js",
   "scripts": {
-    "test": "node main.js"
+    "start": "node main.js"
   },
   "keywords": [
     "json",
