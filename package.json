@@ -1,0 +1,23 @@
+{
+  "name": "jsonpool",
+  "version": "1.0.0",
+  "description": "A json database for devs",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "keywords": [
+    "json",
+    "database",
+    "api",
+    "myjson"
+  ],
+  "author": "Javad Shafique",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "node-json-db": "^0.7.3",
+    "shortid": "^2.2.8"
+  }
+}
