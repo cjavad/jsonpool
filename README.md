@@ -1,4 +1,6 @@
-JSON-STORAGE is a secure way to store json data online, using an rest api.
+JSON-POOl is a secure way to store json data online, using an rest api.
+I was inspired by [myjson.com](http://myjson.com) to make an online json storage system, 
+that unlike myjson gave you the ablity to modify/remove any data you have created using auth tokens
 
 # API
 

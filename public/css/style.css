@@ -40,6 +40,11 @@ input {
     outline-width: 1ch;
 }
 
+.link:hover {
+    color: blue;
+    border-bottom: 1px solid blue;
+}
+
 @media screen and (max-device-width: 1024px) {
     html {
         width: 80%;
