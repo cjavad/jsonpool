@@ -39,3 +39,10 @@ input {
     outline-style: dotted;
     outline-width: 1ch;
 }
+
+@media screen and (max-device-width: 1024px) {
+    html {
+        width: 80%;
+    }
+}
+  
