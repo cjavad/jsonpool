@@ -1,7 +1,7 @@
-// get config
-const config = require("./config.json");
+#!/usr/bin/env node
+"use strict";
 // check for env variable
-config.port = process.env.PORT || config.port;
+var port = process.env.PORT || 8080;
 
 const shortid = require("shortid"); // require modules
 const crypto = require("crypto");
@@ -163,6 +163,6 @@ app.get("/pool/:id", (req, res) => {
 app.get("*", (req, res) => { res.render("error", {errorname: "Page not found", errorcode: 404, details: req.url}); });
 
 // listen on a port
-app.listen(config.port, () => {
-    console.log("Listning on port", config.port);
+app.listen(port, () => {
+    console.log("Listning on http://0.0.0.0:" + port);
 })
