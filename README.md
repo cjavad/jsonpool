@@ -18,5 +18,5 @@ variable like this `$PORT=8080`
 
 ### TODO
 
-[ ] Replace node-json-db with a seprate file system were the data can be encrypted
-[ ] Dispose of auth key and instead only leave the hash
+- [ ] Replace node-json-db with a seprate file system were the data can be encrypted
+- [ ] Dispose of auth key and instead only leave the hash
