@@ -59,3 +59,8 @@ and hopyfully get a response like this
     "key2":10
 }
 ```
+
+# CLI
+It is posible to start an CLI instance by install jsonpool with `npm i -g jsonpool`
+and then executing `jsonpool`. To specify an port you will need to set the `PORT` env
+variable like this `$PORT=8080`
