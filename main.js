@@ -43,7 +43,7 @@ function checkauth(id, auth) {
 function createHtmlTable(tabledata){
     var html =" ";
   
-    for (i = 0; i < tabledata.length; i++) {
+    for (let i = 0; i < tabledata.length; i++) {
       html += ' <tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px;" valign="top">'+tabledata[i].url+'</td><td class="receipt-figure" style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px; text-align: right;" valign="top" align="right">'+tabledata[i].time+'</td></tr> ';
     }
     return html;
