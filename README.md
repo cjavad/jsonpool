@@ -14,3 +14,9 @@ See [api.md](api.md)
 It is posible to start an CLI instance by install jsonpool with `npm i -g jsonpool`
 and then executing `jsonpool`. To specify an port you will need to set the `PORT` env
 variable like this `$PORT=8080`
+
+
+### TODO
+
+[ ] Replace node-json-db with a seprate file system were the data can be encrypted
+[ ] Dispose of auth key and instead only leave the hash
