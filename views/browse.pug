@@ -1,0 +1,11 @@
+html
+    head
+        link(rel='stylesheet', href='css/browse.css')
+        title Browse list of urls
+
+    body
+        br
+        table(class='receipt', id='items', border='0', cellpading='0', cellspacing='0', style='border-collapse: seperate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 80%; margin: 0 auto 80px;')
+            tr(class='receipt-subtle', style='color: #aaa;')
+                td(class='align-center', colspan='2', style='font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; border-buttom: 1px; solid #eee; pading: 5px;', valign='top' align='center') #{total}
+            p!= list

@@ -89,7 +89,13 @@
                 $('#del').show();
             }
 
-            get_pool(input1, load);
+            function callback(data) {
+                if (typeof data === "object") {
+                    load(data)
+                }
+            }
+            
+            get_pool(input1, callback);
         }
 
     </script>   

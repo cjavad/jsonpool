@@ -46,7 +46,7 @@ function update_pool(id, auth, object, callback) {
         method: "PUT",
         url: base_url + id,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({auth: auth, data: object})
+        data: JSON.stringify({auth: auth, override: true, data: object})
 
     }).done(function (res) {
         callback(res);

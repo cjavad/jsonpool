@@ -1,0 +1,16 @@
+html
+    head
+        link(rel="stylesheet", href="css/error.css")
+        title= errorname
+    body
+        br
+        br
+        br
+        div(class="main-errorbox")
+            h1 "#{errorname}" he said.
+
+        div(class="error-detail")
+            h3
+                span Error code #{errorcode}: #{details} &nbsp; &nbsp;
+                button(class="back-btn" onclick="window.location.href = '/'") Home
+            hr

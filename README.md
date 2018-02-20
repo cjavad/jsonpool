@@ -2,6 +2,9 @@ JSON-POOl is a secure way to store json data online, using an rest api.
 I was inspired by [myjson.com](http://myjson.com) to make an online json storage system, 
 that unlike myjson gave you the ablity to modify/remove any data you have created using auth tokens
 
+There is a production instance running on [https://jsonpool.herokuapp.com](https://jsonpool.herokuapp.com)
+Which you can use all the time.
+
 # API
 
 There are four functions to choose from, those include:
@@ -33,8 +36,10 @@ and get an response like
 }
 ```
 We can then use the auth-key and the id to update the post:
+note the override, by using false (default) then you will append to the data
+but if it is set to true then you will override it.
 ```
-PUT http://${host}/pool/wfi3fiIDWI (json = '{"auth":"diqf93ugj23h29h238rh2398h2", "data":{"key2":10}}')
+PUT http://${host}/pool/wfi3fiIDWI (json = '{"auth":"diqf93ugj23h29h238rh2398h2", "override":false, "data":{"key2":10}}')
 ```
 then we will get an status: OK if everything went through
 ```json
