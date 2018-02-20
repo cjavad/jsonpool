@@ -83,7 +83,9 @@ app.get("/pool", (req, res) => {
     var keys = Object.keys(db.getData("/"));
 
     for (let i = 0; i < keys.length; i++) {
-        data.push({time: db.getData("/"+keys[i]+"/time"), url: "<a href='"+base_url+keys[i]+"'>"+keys[i]+"</a>"})
+        if (!db.getData("/"+keys[i]+"/perm")) {
+            data.push({time: db.getData("/"+keys[i]+"/time"), url: "<a href='"+base_url+keys[i]+"'>"+keys[i]+"</a>"})
+        }
     }
     // render url-browser
     res.render("browse", {list: createHtmlTable(data), total: data.length});
