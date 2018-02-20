@@ -31,24 +31,32 @@
         function postit() {
             var input1 = document.getElementById("input1").value; var input2 = document.getElementById("input2").value;
 
+            // if the push button says create but since we're updating
+            // the pool, then we will change it to update
             if (document.getElementById("push").innerText === "create") {
+                $('input:checkbox').attr('disabled', true); // disable checkbox
                 document.getElementById("push").innerText = "update";
             }
-
+            
+            // callback function for selecting the auth and id
             function callback(data) {
                 if (data.hasOwnProperty("id") && data.hasOwnProperty("auth")) {
                     $("#del").show();
                     document.getElementById("input1").value = data.id;
                     document.getElementById("input2").value = data.auth;
                 }
-
+                // place the highligted html in the response box
                 document.getElementById("response").innerHTML = hljs.highlightAuto(JSON.stringify(data)).value;
             }
             
             if (input1 && input2) {
+                // if the id and authkey is specified
+                // then update the pool (override by default)
                 update_pool(input1, input2, data, callback);
             } else {
-                create_pool(data, callback);
+                // if it's the first time were using the postit() function
+                // then create a new pool
+                create_pool(data, callback, $("#private").is(":checked"));
                 reload() // load corrected data
             }
         }
@@ -65,8 +73,13 @@
                 $("#del").hide();
 
                 
-
+                // if the push button says update but since we're deleting
+                // the pool, then we will change it bask to create
                 if (document.getElementById("push").innerText === "update") {
+                    // reset checkbox
+                    $('input:checkbox').removeAttr('checked');
+                    $('input:checkbox').attr('disabled', false);
+                    // rename button
                     document.getElementById("push").innerText = "create";
                 }
             }
@@ -94,8 +107,8 @@
                     load(data)
                 }
             }
-            
-            get_pool(input1, callback);
+            // get pool from server
+            get_pool(input1, callback, input2);
         }
 
     </script>   
@@ -103,8 +116,8 @@
 <body onload="hljs.configure({useBR: true}); $('#del').hide(); load();">
     <h1>JSONPOOL: Secure json storage</h1>
     <br>
-    <input id="input1" placeholder="id"></input>
-    <input id="input2" placeholder="auth"></input>
+    <input class="input" id="input1" placeholder="id"></input>
+    <input class="input" id="input2" placeholder="auth"></input>
     <button class="ok-btn" onclick="reload()">load</button>
     <br>
     <br>
@@ -114,10 +127,12 @@
     <br>
     <button class="ok-btn" onclick="postit()" id="push">create</button>
     <button class="rm-btn" onclick="rmpost()" id="del">delete</button>
+    <input type="checkbox" id="private">Private</input>
+
     <pre><code id="response"></code></pre>
     <br>
     <a onclick="raw()" class="link">View raw</a>
     <a>&nbsp;&nbsp;</a>
-    <a onclick="window.location.replace('docs.html')" class="link">Read More</a>
+    <a onclick="window.location.replace('info.html')" class="link">Read More</a>
 </body>
 </html>

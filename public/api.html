@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="api">API</h1>
+<p>All requests support cross-origin resource sharing (CORS) and *SSL.</p>
+<h6 id="if-supported-by-the-host">*if supported by the host</h6>
+<h2 id="root">Root</h2>
+<p>All request can be found at the root of however you have it hosted so <code><a href="https://jsonpool.herokuapp.com">https://jsonpool.herokuapp.com</a></code> for our production instance.</p>
+<h3 id="create-pool">Create pool</h3>
+<p>To create a pool you will use the following scheme:</p>
+<pre class=" language-http"><code class="prism  language-http">POST /pool/
+</code></pre>
+<p>Were body is a json string (remember to specify the Content-Type) and if everything goes well then<br>
+the response should look like this:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"auth"</span><span class="token punctuation">:</span><span class="token string">"xxxxxxxxxxxxxxxxxxxxx"</span><span class="token punctuation">,</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span><span class="token string">"wfwe0DSos"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="update-an-pool">Update an pool</h3>
+<p>NOTE: Update uses <code>PUT</code></p>
+<p>Update can do two things override an pool or append to an pool, you migth have noticed that the index.html by default overrides<br>
+the pool, you can do this by specifing the <code>override</code> key in the update payload json-string which should look like this:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"id"</span><span class="token punctuation">:</span><span class="token string">"wfwe0DSos"</span><span class="token punctuation">,</span>
+    <span class="token string">"auth"</span><span class="token punctuation">:</span><span class="token string">"xxxxxxxxxxxxxxxxxxxxx"</span><span class="token punctuation">,</span>
+    <span class="token string">"data"</span><span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token string">"key"</span><span class="token punctuation">:</span><span class="token string">"value"</span><span class="token punctuation">}</span>
+    <span class="token string">"override"</span><span class="token punctuation">:</span><span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>the following payload will override the old data.<br>
+The expected response is where status is OK like this</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"status"</span><span class="token punctuation">:</span><span class="token string">"ok"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Sample request:</p>
+<pre class=" language-http"><code class="prism  language-http">PUT /pool/:id
+</code></pre>
+<h3 id="request-json">Request Json</h3>
+<p>the json can be access by using the following scheme <code>https://hostname.com/:id</code><br>
+which can also be access via browsers and whatnot.</p>
+<p>A sample request</p>
+<pre class=" language-http"><code class="prism  language-http">GET /pool/:id
+</code></pre>
+<p>which should give you one if these responses:</p>
+<p>if the pool exists and it isn’t private then you should get your json data:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"key"</span><span class="token punctuation">:</span><span class="token string">"value"</span><span class="token punctuation">,</span>
+    <span class="token string">"int"</span><span class="token punctuation">:</span><span class="token number">5623490</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>if it is private then you will need to specify auth either as json in the body like this <code>{"auth":"xxxxxxxxxxxxxxxxxxxxx"}</code> or as a url-query <code>https://hostname.tld/pool/id?auth=xxxxxxxxxxxxxxxxxxxxx</code>.</p>
+<h3 id="delete-your-pool">Delete your pool</h3>
+<p>lets say you dont want a specific pool anymore then you can delete it by using the <code>DELETE</code> http method with an payload/url-query that<br>
+contains the auth key like this:</p>
+<pre class=" language-http"><code class="prism  language-http">DELETE /pool/:id?auth=xxxxxxxxxxxxxxxxxxxxx
+</code></pre>
+<p>which should return the same status: ok response as update</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+    <span class="token string">"status"</span><span class="token punctuation">:</span><span class="token string">"ok"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="errors">Errors</h2>
+<p>Ofcourse there is some error handling going on, with the <code>GET</code> requests getting some pretty html error pages.<br>
+There are three common errors excluding the common <code>404 page not found</code> for api-requests:</p>
+<ul>
+<li>
+<p>500: Json not valid, Body does not contain valid json</p>
+<ul>
+<li>If a wrong payload has been used</li>
+</ul>
+</li>
+<li>
+<p>500: Wrong auth key for pool “$id”</p>
+<ul>
+<li>If the auth key is invalid</li>
+</ul>
+</li>
+<li>
+<p>404: Pool does not exist</p>
+<ul>
+<li>The pool can’t be found/does not exist</li>
+</ul>
+</li>
+</ul>
+</div>
+</body>
+
+</html>

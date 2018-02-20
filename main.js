@@ -12,9 +12,14 @@ const bodyparser = require("body-parser");
 var app = express(); // init app 
 var db = new (require("node-json-db"))("db.json", true, false); // create database
 
+// Capture all errors
+process.on('uncaughtException', function(err) {
+    console.log('Caught exception: ' + err);
+  });
 
 // functions
 function generate_password(len = 16) {
+    // use crypto for generating the random string
     return crypto.randomBytes(len).toString("hex");
 }
 
@@ -25,7 +30,7 @@ function exists(key) {
     } catch (error) {
         return false;
     }
-
+    // else return true
     return true;
 }
 
@@ -62,7 +67,7 @@ app.use((req, res, next) => {
 
 // set view engine to pug
 app.set('view engine', 'pug');
-// use midleware
+// use middleware
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 // set public dir
@@ -71,7 +76,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 
 /* routes */
 
-// give browser when using /pool
+// give list of all pools when get'ing /pool
 app.get("/pool", (req, res) => {
     var data = [];
     var base_url = "/pool/";
@@ -80,7 +85,7 @@ app.get("/pool", (req, res) => {
     for (let i = 0; i < keys.length; i++) {
         data.push({time: db.getData("/"+keys[i]+"/time"), url: "<a href='"+base_url+keys[i]+"'>"+keys[i]+"</a>"})
     }
-
+    // render url-browser
     res.render("browse", {list: createHtmlTable(data), total: data.length});
 });
 
@@ -91,12 +96,13 @@ app.post("/pool", (req, res) => {
     var data = req.body;
 
     if (!(typeof data == "object")) {
-        res.status(500).render("error", { errorname: "Json not valid", errorcode: 500, details: "Body does not contain valid json" });
+        res.status(500).send("500: Json not valid, Body does not contain valid json"); // render("error", { errorname: "Json not valid", errorcode: 500, details: "Body does not contain valid json" });
 
     } else {
         db.push("/" + id, {
             auth: pass,
             data: data,
+            perm: !isNaN(req.query.private) ? Number(req.query.private):0,
             time: new Date().toString() // add a time of creation
         }, false);
         // send required data
@@ -118,14 +124,14 @@ app.put("/pool/:id", (req, res) => {
 
         if (checkauth(id, auth)) {
             // check if body is valid json
-            if (typeof data !== "object") res.status(500).render("error", { errorname: "Json not valid", errorcode: 500, details: "Body does not contain valid json" });
+            if (typeof data !== "object") res.status(500).send("500: Json not valid, Body does not contain valid json"); //.render("error", { errorname: "Json not valid", errorcode: 500, details: "Body does not contain valid json" });
             db.push("/" + id + "/data", data, override);
             res.send({"status":"ok"});
         } else {
-            res.status(500).render("error", { errorname: "Wrong Auth key", errorcode: 500, details: "Wrong auth key for pool \"" + id + "\"" });
+            res.status(500).send("500: Wrong auth key for pool \"" + id + "\""); //.render("error", { errorname: "Wrong Auth key", errorcode: 500, details: "Wrong auth key for pool \"" + id + "\"" });
         }
     } else {
-        res.status(500).render("error", { errorname: "Pool Not Found", errorcode: 500, details: "Pool \"" + id + "\" does not exist or can't be found" });
+        res.status(404).send("404: Pool does not exist"); //.render("error", { errorname: "Pool Not Found", errorcode: 500, details: "Pool \"" + id + "\" does not exist or can't be found" });
     }
 });
 
@@ -141,19 +147,33 @@ app.delete("/pool/:id", (req, res) => {
             res.send({"status":"ok"});
             return;
         } else {
-            res.status(500).render("error", { errorname: "Wrong Auth key", errorcode: 500, details: "Wrong auth key for pool \"" + id + "\"" });
+            res.status(500).send("500: Wrong auth key for pool \"" + id + "\""); //.render("error", { errorname: "Wrong Auth key", errorcode: 500, details: "Wrong auth key for pool \"" + id + "\"" });
         }
     } else {
-        res.status(500).render("error", { errorname: "Pool Not Found", errorcode: 500, details: "Pool \"" + id + "\" does not exist or can't be found" });
+        res.status(404).send("404: Pool does not exist"); //.render("error", { errorname: "Pool Not Found", errorcode: 500, details: "Pool \"" + id + "\" does not exist or can't be found" });
     }   
 });
 
 // get
 app.get("/pool/:id", (req, res) => {
     var id = req.params.id;
+    var auth = req.body.auth || req.query.auth;
 
     if (exists(id)) {
-        res.send(db.getData("/" + id + "/data"));
+        var data = db.getData("/" + id);
+        // check if it's private
+        if (data.perm) {
+            // if it is check auth
+            if (checkauth(id, auth)) {
+                res.send(data.data);
+            } else {
+                // if none is specified or it is the wrong key then send error
+                res.status(500).send("500: Wrong auth key for pool \"" + id + "\""); //.render("error", { errorname: "Wrong Auth key", errorcode: 500, details: "Wrong auth key for pool \"" + id + "\"" });
+            }
+        // else if it's public then just send the data
+        } else {
+            res.send(data.data);
+        }
     } else {
         res.status(500).render("error", { errorname: "Pool Not Found", errorcode: 500, details: "Pool \"" + id + "\" does not exist or can't be found" });
     }
