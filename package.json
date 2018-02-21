@@ -1,10 +1,10 @@
 {
   "name": "jsonpool",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "A json database for devs",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.small.js"
   },
   "bin": "./main.js",
   "keywords": [

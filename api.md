@@ -18,6 +18,15 @@ the response should look like this:
     "id":"wfwe0DSos"
 }
 ```
+If you use the private query then your auth key is required for reading the file and we
+will encrypt your data so even if the database was leaked nobody would be able to read the 
+encrypted data and the hashed authkeys/passwords.
+
+NOTE: this mean that if anyone got access to your database then if your pool was private they can not access it.
+
+```http
+POST /pool/?private=1
+```
 
 ### Update an pool
 NOTE: Update uses `PUT`

@@ -16,11 +16,19 @@ that unlike myjson gave you the ablity to modify/remove any data you have create
 <p>There is a production instance running on <a href="https://jsonpool.herokuapp.com">https://jsonpool.herokuapp.com</a><br>
 Which you can use all the time.</p>
 <h2 id="api">API</h2>
-<p>See <a href="api.html">api.html</a></p>
+<p>See <a href="api.md">api.md</a></p>
 <h2 id="cli">CLI</h2>
 <p>It is posible to start an CLI instance by install jsonpool with <code>npm i -g jsonpool</code><br>
 and then executing <code>jsonpool</code>. To specify an port you will need to set the <code>PORT</code> env<br>
-variable like this <code>$PORT=8080</code></p>
+variable like this <code>$PORT=8080</code>. Rigth now there are two modes <code>fs</code> (filesystem) and <code>db</code><br>
+(database). The file system create induvidial files for each pool, where as the database stores it all<br>
+in a single json file, which migth be “cleaner” but in the long run if we end up having millions of millions<br>
+of pools and then a single file will get very very slow.</p>
+<h3 id="todo">TODO</h3>
+<ul>
+<li>[x] Replace node-json-db with a seprate file system were the data can be encrypted</li>
+<li>[x] Dispose of auth key and instead only leave the hash</li>
+</ul>
 </div>
 </body>
 

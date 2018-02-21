@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Api docs</title>
+  <title>Api Docs</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
@@ -13,18 +13,23 @@
 <p>All requests support cross-origin resource sharing (CORS) and *SSL.</p>
 <h6 id="if-supported-by-the-host">*if supported by the host</h6>
 <h2 id="root">Root</h2>
-<p>All request can be found at the root of however you have it hosted so <code><a href="https://jsonpool.herokuapp.com">https://jsonpool.herokuapp.com</a></code> for our production instance.</p>
+<p>All request can be found at the root of however you have it hosted so <code>https://jsonpool.herokuapp.com/</code> for our production instance.</p>
 <h3 id="create-pool">Create pool</h3>
 <p>To create a pool you will use the following scheme:</p>
-<pre class=" language-http"><code class="prism  language-http">POST /pool/?private=1
+<pre class=" language-http"><code class="prism  language-http">POST /pool/
 </code></pre>
-<p>NOTE: the private is optional and not required but if not specified then anyone can view your json</p>
 <p>Were body is a json string (remember to specify the Content-Type) and if everything goes well then<br>
 the response should look like this:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
     <span class="token string">"auth"</span><span class="token punctuation">:</span><span class="token string">"xxxxxxxxxxxxxxxxxxxxx"</span><span class="token punctuation">,</span>
     <span class="token string">"id"</span><span class="token punctuation">:</span><span class="token string">"wfwe0DSos"</span>
 <span class="token punctuation">}</span>
+</code></pre>
+<p>If you use the private query then your auth key is required for reading the file and we<br>
+will encrypt your data so even if the database was leaked nobody would be able to read the<br>
+encrypted data and the hashed authkeys/passwords.</p>
+<p>NOTE: this mean that if anyone got access to your database then if your pool was private they can not access it.</p>
+<pre class=" language-http"><code class="prism  language-http">POST /pool/?private=1
 </code></pre>
 <h3 id="update-an-pool">Update an pool</h3>
 <p>NOTE: Update uses <code>PUT</code></p>
