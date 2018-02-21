@@ -6,7 +6,10 @@ var useFs = process.argv[2] === "fs";
 // require modules
 const path = require("path");
 const express = require("express");
+// require middleware
 const bodyparser = require("body-parser");
+const compression = require('compression');
+
 
 var app = express(); // init app 
 
@@ -30,6 +33,7 @@ app.use((req, res, next) => {
 // set view engine to pug
 app.set('view engine', 'pug');
 // use middleware
+app.use(compression());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 // set public dir
