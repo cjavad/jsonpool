@@ -91,7 +91,9 @@
         
         function raw() {
             var input1 = document.getElementById("input1").value;
-            if (input1) window.open("/pool/" + input1);
+            var input2 = document.getElementById("input2").value;
+            var str = input2 ? "/?auth=" + input2:"";
+            if (input1) window.open("/pool/" + input1 + str);
         }
 
         function reload() {
