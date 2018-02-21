@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/jsoneditor.css"/>
+    <link rel="stylesheet" type="text/css" href="css/min/style.min.css">
+    <link rel="stylesheet" type="text/css" href="css/min/jsoneditor.min.css"/>
     <!--- use jquery for javascript and the jsoneditor plugin for the editor -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.jsoneditor.js"></script>
-    <script src="js/pools.js"></script>
+    <script src="js/min/jquery.min.js"></script>
+    <script src="js/min/jquery.jsoneditor.min.js"></script>
+    <script src="js/min/pools.min.js"></script>
     <!-- Use a JSON only version of highligth.js -->
-    <link rel="stylesheet" type="text/css" href="css/github.css">
-    <script src="js/highlight.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/min/github.min.css">
+    <script src="js/min/highlight.min.js"></script>
 
 
     <meta charset="UTF-8">
@@ -17,105 +17,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JSONPOOL</title>
     <!-- Json editor controller -->
-    <script>
-        let data = {}; // global data value
-
-        function load(json = {}) {
-            $('#editor').jsonEditor(json, {
-                change: function(jsondata) {
-                    data = jsondata;
-                }
-            }); 
-        }
-
-        function postit() {
-            var input1 = document.getElementById("input1").value; var input2 = document.getElementById("input2").value;
-
-            // if the push button says create but since we're updating
-            // the pool, then we will change it to update
-            if (document.getElementById("push").innerText === "create") {
-                $('input:checkbox').attr('disabled', true); // disable checkbox
-                document.getElementById("push").innerText = "update";
-            }
-            
-            // callback function for selecting the auth and id
-            function callback(data) {
-                if (data.hasOwnProperty("id") && data.hasOwnProperty("auth")) {
-                    $("#del").show();
-                    document.getElementById("input1").value = data.id;
-                    document.getElementById("input2").value = data.auth;
-                }
-                // place the highligted html in the response box
-                document.getElementById("response").innerHTML = hljs.highlightAuto(JSON.stringify(data)).value;
-            }
-            
-            if (input1 && input2) {
-                // if the id and authkey is specified
-                // then update the pool (override by default)
-                update_pool(input1, input2, data, callback);
-            } else {
-                // if it's the first time were using the postit() function
-                // then create a new pool
-                create_pool(data, callback, $("#private").is(":checked"));
-                reload() // load corrected data
-            }
-        }
-
-        function rmpost() {
-            var input1 = document.getElementById("input1").value;
-            var input2 = document.getElementById("input2").value;
-            
-            function callback(data) {
-                load({});
-                document.getElementById("response").innerHTML = hljs.highlightAuto(JSON.stringify(data)).value;
-                document.getElementById("input1").value = "";
-                document.getElementById("input2").value = "";
-                $("#del").hide();
-
-                
-                // if the push button says update but since we're deleting
-                // the pool, then we will change it bask to create
-                if (document.getElementById("push").innerText === "update") {
-                    // reset checkbox
-                    $('input:checkbox').removeAttr('checked');
-                    $('input:checkbox').attr('disabled', false);
-                    // rename button
-                    document.getElementById("push").innerText = "create";
-                }
-            }
-
-            if (input1, input2) {
-                delete_pool(input1, input2, callback);
-            }
-        }
-        
-        function raw() {
-            var input1 = document.getElementById("input1").value;
-            var input2 = document.getElementById("input2").value;
-            var str = input2 ? "/?auth=" + input2:"";
-            if (input1) window.open("/pool/" + input1 + str);
-        }
-
-        function reload() {
-            var input1 = document.getElementById("input1").value;
-            var input2 = document.getElementById("input2").value;
-
-            if (input2) {
-                $('#del').show();
-            }
-
-            function callback(data) {
-                if (typeof data === "object") {
-                    load(data)
-                }
-            }
-            // get pool from server
-            get_pool(input1, callback, input2);
-        }
-
-    </script>   
+    <script async>let data={};function load(json={}){$('#editor').jsonEditor(json,{change:function(jsondata){data=jsondata}})}
+        function postit(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;if(document.getElementById("push").innerText==="create"){$('input:checkbox').attr('disabled',!0);document.getElementById("push").innerText="update"}
+        function callback(data){if(data.hasOwnProperty("id")&&data.hasOwnProperty("auth")){$("#del").show();document.getElementById("input1").value=data.id;document.getElementById("input2").value=data.auth}
+        document.getElementById("response").innerHTML=hljs.highlightAuto(JSON.stringify(data)).value}
+        if(input1&&input2){update_pool(input1,input2,data,callback)}else{create_pool(data,callback,$("#private").is(":checked"));reload()}}
+        function rmpost(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;function callback(data){load({});document.getElementById("response").innerHTML=hljs.highlightAuto(JSON.stringify(data)).value;document.getElementById("input1").value="";document.getElementById("input2").value="";$("#del").hide();if(document.getElementById("push").innerText==="update"){$('input:checkbox').removeAttr('checked');$('input:checkbox').attr('disabled',!1);document.getElementById("push").innerText="create"}}
+        if(input1,input2){delete_pool(input1,input2,callback)}}
+        function raw(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;var str=input2?"/?auth="+input2:"";if(input1)window.open("/pool/"+input1+str)}
+        function reload(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;if(input2){$('#del').show()}
+        function callback(data){if(typeof data==="object"){load(data)}}
+        get_pool(input1,callback,input2)}</script>   
 </head>
-<body onload="hljs.configure({useBR: true}); $('#del').hide(); load();">
+<body onload="$('#del').hide(); load();">
     <h1>JSONPOOL: Secure json storage</h1>
     <br>
     <input class="input" id="input1" placeholder="id"></input>
