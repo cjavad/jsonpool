@@ -2,7 +2,7 @@
     font-family: 'Playfair Display';
     font-style: normal;
     font-weight: 400;
-    src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url(https://fonts.gstatic.com/s/playfairdisplay/v13/2NBgzUtEeyB-Xtpr9bm1Cdhy5e3cTyNKTHXrP9DO-Rc.woff2) format('woff2');
+    src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url(/fonts/playfair-display.woff2) format('woff2');
 }
 
 /* Error css */

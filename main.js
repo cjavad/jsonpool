@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const express = require("express");
 const path = require("path");
 const bodyparser = require("body-parser");
+const fs = require("fs");
 
 var app = express(); // init app 
 var db = new (require("node-json-db"))("db.json", true, false); // create database
@@ -37,7 +38,9 @@ function exists(key) {
 
 function checkauth(id, auth) {
     if (!exists(id)) return;
+    // get key from database
     var auth_key = db.getData("/" + id + "/auth");
+    // check if they match
     if (auth_key === auth) {
         return true;
     }
@@ -45,22 +48,21 @@ function checkauth(id, auth) {
     return false;
 }
 
-function createHtmlTable(tabledata){
+function createHtmlTable(tabledata) {
     var html =" ";
-  
     for (let i = 0; i < tabledata.length; i++) {
-      html += ' <tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px;" valign="top">'+tabledata[i].url+'</td><td class="receipt-figure" style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px; text-align: right;" valign="top" align="right">'+tabledata[i].time+'</td></tr> ';
+        html += ' <tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px;" valign="top">'+tabledata[i].url+'</td><td class="receipt-figure" style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-bottom: 1px solid #eee; padding: 5px; text-align: right;" valign="top" align="right">'+tabledata[i].time+'</td></tr> ';
     }
     return html;
-  } 
+}
 
 // set express headers
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     // some fun
-    res.header("X-Powered-By", "RAINBOW FARTS");
-    res.header("Server", "RAINBOWS + FARTS = ©_©");
+    res.header("X-Powered-By", "Pixidust");
+    // res.header("Server", "Magic");
     // continue
     next();
 });
@@ -186,5 +188,6 @@ app.get("*", (req, res) => { res.render("error", {errorname: "Page not found", e
 
 // listen on a port
 app.listen(port, () => {
+    // and print url that we're listening on
     console.log("Listning on http://0.0.0.0:" + port);
-})
+});
