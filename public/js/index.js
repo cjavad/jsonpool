@@ -37,8 +37,9 @@ function load(json = false) {
 
 // highlight json
 function highlight(obj, id) {
-    document.getElementById(id).innerHTML = "{"; // reset html
+    if (typeof obj !== "object") obj = JSON.parse(obj);
     var keys = Object.keys(obj);
+    var all_html = "";
     keys.forEach((key) => {
       var html = "<span>\"" + key +"\":";
       var elm = obj[key];
@@ -53,10 +54,10 @@ function highlight(obj, id) {
         html += ", ";
       }
       
-      document.getElementById(id).innerHTML += html;
+      all_html += html;
     });
-    // add end block
-    document.getElementById(id).innerHTML += "}";
+    // return html object
+    return "<span>{" + all_html + "}<\/span>";
 }
 
 function postit() {
