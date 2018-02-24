@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 // set view engine to pug
 app.set('view engine', 'pug');
 // use middleware
-app.use(compression());
+app.use(compression({level: 1}));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 // set public dir
@@ -49,7 +49,6 @@ if (useFs) {
     // else use json database
     require("./lib/jsonpool.json")(app);
 }
-
 
 // 404 error for get
 app.get("*", (req, res) => { res.render("error", {errorname: "Page not found", errorcode: 404, details: req.url}); });

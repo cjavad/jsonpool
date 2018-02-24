@@ -1,14 +1,16 @@
 html {
-    background: bisque;
-    color: black;
+    background: #272822;
+    color: whitesmoke;
     margin: 0 auto;
     width: 50%;
 }
 
+/*Buttons*/
 button {
     height: 34px;
     width: 55px;
-    background: wheat;
+    color: white;
+    background: #272822;
 }
 
 button:hover {
@@ -22,8 +24,10 @@ button:hover {
 .rm-btn {
     display:none;
     border-color: tomato;
-}
+}/*Buttons*/
 
+  
+/*Checkbox*/
 
 .input {
     height: 34px;
@@ -36,9 +40,6 @@ button:hover {
 
 .box {
     outline-color: cadetblue;
-    outline-offset: 0.1ch;
-    outline-style: dotted;
-    outline-width: 1ch;
 }
 
 .link:hover {
@@ -46,9 +47,17 @@ button:hover {
     border-bottom: 1px solid blue;
 }
 
+#editor {
+    height: 400px;
+}
+
 @media screen and (max-device-width: 1024px) {
     html {
         width: 80%;
+    }
+
+    #text-editor {
+        width: 90%;
     }
 }
   

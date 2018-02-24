@@ -19,7 +19,11 @@ in a single json file, which migth be "cleaner" but in the long run if we end up
 of pools and then a single file will get very very slow.
 
 
+## News
+The editor is now powered by [ace](https://ace.c9.io)
+
 ### TODO
 
 - [x] Replace node-json-db with a seprate file system were the data can be encrypted
 - [x] Dispose of auth key and instead only leave the hash
+- [x] Replace jsoneditor with something else

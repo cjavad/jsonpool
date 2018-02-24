@@ -5,38 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google-site-verification" content="6eJbxFjl5VOy1doneL5kQZfUfGs50BisbqQfN0WraKM" />
     <meta name="description" content="Secure json storage">
     <meta name="author" content="Javad Shafique">
     <meta name="keywords" content="json, storage, jsonpool, json pool, json-pool, JSONPOOL, JSON POOL, JSON-POOL, secure storage, aes, aes encryption">
     
     <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="css/min/style.min.css">
-    <link rel="stylesheet" type="text/css" href="css/min/jsoneditor.min.css"/>
     <!--- use jquery for javascript and the jsoneditor plugin for the editor -->
     <script src="js/min/jquery.min.js"></script>
-    <script src="js/min/jquery.jsoneditor.min.js"></script>
     <script src="js/min/pools.min.js"></script>
     <!-- Use a JSON only version of highligth.js -->
     <link rel="stylesheet" type="text/css" href="css/min/github.min.css">
+    <!-- Editor here -->
+    <script src="ace/ace.js"></script>
     <script src="js/min/highlight.min.js"></script>
 
-    <title>JSONPOOL</title>
-    <!-- Json editor controller -->
-    <script async>let data={};function load(json={}){$('#editor').jsonEditor(json,{change:function(jsondata){data=jsondata}})}
-        function postit(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;if(document.getElementById("push").innerText==="create"){$('input:checkbox').attr('disabled',!0);document.getElementById("push").innerText="update"}
-        function callback(data){if(data.hasOwnProperty("id")&&data.hasOwnProperty("auth")){$("#del").show();document.getElementById("input1").value=data.id;document.getElementById("input2").value=data.auth}
-        document.getElementById("response").innerHTML=hljs.highlightAuto(JSON.stringify(data)).value}
-        if(input1&&input2){update_pool(input1,input2,data,callback)}else{create_pool(data,callback,$("#private").is(":checked"));reload()}}
-        function rmpost(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;function callback(data){load({});document.getElementById("response").innerHTML=hljs.highlightAuto(JSON.stringify(data)).value;document.getElementById("input1").value="";document.getElementById("input2").value="";$("#del").hide();if(document.getElementById("push").innerText==="update"){$('input:checkbox').removeAttr('checked');$('input:checkbox').attr('disabled',!1);document.getElementById("push").innerText="create"}}
-        if(input1,input2){delete_pool(input1,input2,callback)}}
-        function raw(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;var str=input2?"/?auth="+input2:"";if(input1)window.open("/pool/"+input1+str)}
-        function reload(){var input1=document.getElementById("input1").value;var input2=document.getElementById("input2").value;if(input2){$('#del').show()}
-        function callback(data){if(typeof data==="object"){load(data)}}
-        get_pool(input1,callback,input2)}</script>   
+    <title>JsonPool</title>
+    <!-- controller -->
+    <script async src="js/min/index.min.js"></script>   
 </head>
-<body onload="$('#del').hide(); load();">
-    <h1>JSONPOOL: Secure json storage</h1>
+<body onload="load();">
+    <h1>JsonPool: Secure json storage</h1>
     <br>
     <input class="input" id="input1" placeholder="id"></input>
     <input class="input" id="input2" placeholder="auth"></input>
@@ -44,13 +33,14 @@
     <br>
     <br>
     <div class="box">
-        <div id="editor" class="json-editor"></div>
+        <!-- <textarea onchange="load();" placeholder="{}" id="text-editor"></textarea> -->
+        <div onchange="load();"  id="editor">{}</div>
     </div>
     <br>
     <button class="ok-btn" onclick="postit()" id="push">create</button>
     <button class="rm-btn" onclick="rmpost()" id="del">delete</button>
-    <input type="checkbox" id="private">Private</input>
-
+    
+    <input type="checkbox" id="private"alt="Encrypt json with auth key">Private</input>
     <pre><code id="response"></code></pre>
     <br>
     <a onclick="raw()" class="link">View raw</a>
