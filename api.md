@@ -37,7 +37,7 @@ the pool, you can do this by specifing the `override` key in the update payload 
 {
     "id":"wfwe0DSos",
     "auth":"xxxxxxxxxxxxxxxxxxxxx",
-    "data":{"key":"value"}
+    "data":{"key":"value"},
     "override":true
 }
 ```
