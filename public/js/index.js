@@ -5,6 +5,15 @@ var editor = ace.edit("editor"); editor.session.setMode("ace/mode/json"); editor
     load(); // on change call load() which will check the json
 });
 
+// set events
+$("#reload").on("click", reload);
+$("#push").on("click", postit);
+$("#del").on("click", rmpost);
+$("#genlink").on("click", raw);
+$("#editor").on("change", load);
+$("#more").on("click", function(){
+    window.location.replace('about.html')
+});
 
 function load(json = false) {
     if (typeof json == "object") {
@@ -26,6 +35,30 @@ function load(json = false) {
     return true
 }
 
+// highlight json
+function highlight(obj, id) {
+    document.getElementById(id).innerHTML = "{"; // reset html
+    var keys = Object.keys(obj);
+    keys.forEach((key) => {
+      var html = "<span>\"" + key +"\":";
+      var elm = obj[key];
+      
+      if (typeof elm === "string") {
+        html += "\"<span style='color: red;'>" + elm + "<\/span><\/span>\"";
+      } else {
+        html += "<span style='color: blue;'>\"" + String(elm) + "<\/span><\/span>";
+      }
+      
+      if (keys.indexOf(key) !== keys.length - 1) {
+        html += ", ";
+      }
+      
+      document.getElementById(id).innerHTML += html;
+    });
+    // add end block
+    document.getElementById(id).innerHTML += "}";
+}
+
 function postit() {
     // get id and auth key
     var input1 = $("#input1").val();
@@ -42,7 +75,7 @@ function postit() {
             $("#input1").val(data.id);
             $("#input2").val(data.auth);
         }
-        $("#response").html(hljs.highlightAuto(JSON.stringify(data)).value);
+        $("#response").html(highlight(data));
     }
     if (input1 && input2) {
         update_pool(input1, input2, data, callback)
@@ -58,7 +91,7 @@ function rmpost() {
 
     function callback(data) {
         load({});
-        $("#response").html(hljs.highlightAuto(JSON.stringify(data)).value);
+        $("#response").html(highlight(data));
         $("#input1").val("");
         $("#input2").val("");
         $("#del").hide();
@@ -76,7 +109,7 @@ function rmpost() {
 function raw() {
     var input1 = $("#input1").val();
     var input2 = $("#input2").val();
-    var str = input2 ? "/?auth=" + input2 : "";
+    var str = input2 && $("#private").is(":checked") ? "/?auth=" + input2 : "";
     if (input1) window.open("/pool/" + input1 + str);
 }
 

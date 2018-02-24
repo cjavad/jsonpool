@@ -21,6 +21,11 @@ process.on('uncaughtException', function(err) {
 
 // set express headers
 app.use((req, res, next) => {
+    // security
+    res.header("Content-Security-Policy", "script-src 'self'; worker-src 'self' blob: " + req.protocol + "://" + req.get("host") + "; style-src 'self' 'unsafe-inline'");
+    res.header("X-Frame-Options", "DENY"); // deny iframe access
+    res.header("X-XSS-Protection", "1; mode = block");
+    res.header("X-Content-Type-Options", "nosniff");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     // some fun
@@ -36,9 +41,7 @@ app.set('view engine', 'pug');
 app.use(compression({level: 1}));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
-// set public dir
-app.use(express.static(path.join(__dirname + "/public")));
-
+app.use(express.static(path.join(__dirname + "/public/")));
 
 /* routes */
 
@@ -51,7 +54,7 @@ if (useFs) {
 }
 
 // 404 error for get
-app.get("*", (req, res) => { res.render("error", {errorname: "Page not found", errorcode: 404, details: req.url}); });
+app.get("*", (req, res) => { res.header("Content-Type", "text/html"); res.status(404).render("error", {errorname: "Page not found", errorcode: 404, details: req.url}); });
 
 // listen on a port
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 {
   "name": "jsonpool",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A json database for devs",
   "main": "main.js",
   "scripts": {

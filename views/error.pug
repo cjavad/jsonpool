@@ -1,7 +1,7 @@
 html
     head
         link(rel="shortcut icon", href="/favicon.png", type="image/x-icon")
-        link(rel="stylesheet", href="/css/min/error.min.css")
+        link(rel="stylesheet", href="/css/error.min.css")
         title= errorname
     body
         br
@@ -13,5 +13,6 @@ html
         div(class="error-detail")
             h3
                 span Error code #{errorcode}: #{details} &nbsp; &nbsp;
-                button(class="back-btn" onclick="window.location.href = '/'") Home
+                a(href="/")
+                    button(class="back-btn") Home
             hr
