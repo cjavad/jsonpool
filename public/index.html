@@ -10,15 +10,8 @@
     
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="/css/style.min.css">
-    <!--- use jquery for javascript and the jsoneditor plugin for the editor -->
-    <script src="/js/jquery.min.js"></script>
-    <script defer src="/js/pools.min.js"></script>
-    <!-- Use ace as the editor -->
-    <script src="/ace/ace.js"></script>
 
-    <title>JsonPool</title>
-    <!-- controller -->
-    <script async src="/js/index.min.js"></script>   
+    <title>JsonPool</title>  
 </head>
 <body>
     <h1>JsonPool: Secure json storage</h1>
@@ -29,7 +22,7 @@
     <br>
     <br>
     <div class="box">
-        <!-- <textarea onchange="load();" placeholder="{}" id="text-editor"></textarea> -->
+        <!-- <textarea onchange="load();" placeholder="{}" id="editor"></textarea> -->
         <div id="editor">{}</div>
     </div>
     <br>
@@ -44,4 +37,13 @@
     <a>&nbsp;&nbsp;</a>
     <a class="link" id="more">Read More</a>
 </body>
+<footer>
+    <!--- use jquery for javascript and the jsoneditor plugin for the editor -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Use ace as the editor -->
+    <script src="/ace/ace.js"></script>
+    <!-- controller -->
+    <script src="/js/pools.min.js"></script>
+    <script async src="/js/index.min.js"></script> 
+</footer>
 </html>

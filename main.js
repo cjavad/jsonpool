@@ -11,7 +11,7 @@ const bodyparser = require("body-parser");
 const compression = require('compression');
 
 
-var app = express(); // init app 
+var app = express(); // init app
 
 /* Capture all errors
 process.on('uncaughtException', function(err) {
@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname + "/public/")));
 
 /* routes */
 
-// if we shall use the file system 
+// if we shall use the file system
 if (useFs) {
     require("./lib/jsonpool.file")(app, path.join(__dirname + "/pools/"));
 } else {
@@ -59,5 +59,5 @@ app.get("*", (req, res) => { res.header("Content-Type", "text/html"); res.status
 // listen on a port
 app.listen(port, () => {
     // and print url that we're listening on
-    console.log("Listning on http://0.0.0.0:" + port);
+    console.log("Listning on http:\/\/0.0.0.0:" + port);
 });

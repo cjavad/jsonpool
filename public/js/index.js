@@ -37,7 +37,7 @@ function load(json = false) {
 
 // highlight json
 function highlight(obj, id) {
-    if (!typeof obj === "object") obj = JSON.parse(obj);
+    if (typeof obj !== "object") obj = JSON.parse(obj);
     var keys = Object.keys(obj);
     var all_html = "";
     keys.forEach((key) => {
