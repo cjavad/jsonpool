@@ -11,7 +11,7 @@ Which you can use all the time.
 See [api.md](api.md)
 
 ## CLI
-It is posible to start an CLI instance by install jsonpool with `npm i -g jsonpool`
+It is posible to start an CLI instance by installing jsonpool with `npm i -g jsonpool`
 and then executing `jsonpool`. To specify an port you will need to set the `PORT` env
 variable like this `$PORT=8080`. Rigth now there are two modes `fs` (filesystem) and `db`
 (database). The file system create induvidial files for each pool, where as the database stores it all 
