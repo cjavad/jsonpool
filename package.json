@@ -16,12 +16,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/javadsm/jsonpool.git"
+    "url": "https://github.com/cjavad/jsonpool.git"
   },
   "author": "Javad Shafique",
   "license": {
     "type": "MIT",
-    "url": "https://github.com/javadsm/jsonpool/blob/master/LICENSE"
+    "url": "https://github.com/cjavad/jsonpool/blob/master/LICENSE"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
