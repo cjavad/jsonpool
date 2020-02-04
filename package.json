@@ -4,8 +4,8 @@
   "description": "A json database for devs",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js fs",
-    "test": "node main.js"
+    "start": "node main.js",
+    "test": "node main.js fs"
   },
   "bin": "./main.js",
   "keywords": [
