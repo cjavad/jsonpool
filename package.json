@@ -28,7 +28,7 @@
     "compression": "^1.7.2",
     "express": "^4.16.2",
     "node-json-db": "^0.7.3",
-    "pug": "^2.0.0-rc.4",
+    "pug": "^3.0.1",
     "shortid": "^2.2.8"
   }
 }
